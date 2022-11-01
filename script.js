@@ -26,6 +26,7 @@ function drawCircle(xc, yc, x, y) {
   canvas.fillRect(xc - y, yc + x, 1, 1);
 }
 
+// Bresenham Garis
 function drawLineBresenham(x1, y1, x2, y2) {
   let dx, dy, x, y;
   dx = Math.abs(x2 - x1);
@@ -33,6 +34,7 @@ function drawLineBresenham(x1, y1, x2, y2) {
   x = x1;
   y = y1;
 
+  canvas.fillStyle = "RED"
   setPixel(x, y);
   console.log("Line Bresenham");
   console.log(`endpoints : (${x1},${y1}) (${x2},${y2})`);
@@ -74,12 +76,38 @@ function drawLineBresenham(x1, y1, x2, y2) {
   }
 }
 
+function drawCircleBresenham(xc, yc, r) {
+  let x,y,P
+  x=0
+  y=r
+  P = 3-2 * r;
+  canvas.fillStyle = "BLUE"
+  drawCircle(xc, yc, x, y);
+  console.log("Circle Bresenham");
+  console.log(`(xc,yc)=(${xc},${yc})  r=${r}`)
+  console.log(`P  (x,y)`);
+  while (x < y) {
+    if (P < 0) {
+      P = P + ( 4 * x ) + 6;
+    } else { P = P + 4 * (x-y) + 10 ; y--;
+    }
+    x++;
+    drawCircle(xc, yc, x, y);
+  console.log(`${P}  (${x},${y})`);
+  }
+}
+
 function drawCircleMidPoint(xc, yc, r) {
   let x, y, P;
   x = 0;
   y = r;
   P = 1 - r;
+  canvas.fillStyle = "GREEN"
+  drawCircle(xc, yc, x, y);
   console.log("Circle MidPoint");
+  console.log(`(xc,yc)=(${xc},${yc})  r=${r}`)
+  console.log(`P  (x,y)`);
+  console.log(`${P}  (${x},${y})`);
   while (x < y) {
     if (P < 0) P = P + 2 * x + 1;
     // P >= 0
@@ -89,9 +117,10 @@ function drawCircleMidPoint(xc, yc, r) {
     }
     x++;
     drawCircle(xc, yc, x, y);
-    console.log(x, y);
+    console.log(`${P}  (${x},${y})`);
   }
 }
 
 drawLineBresenham(20, 20, 120, 110);
+drawCircleBresenham(30, 50, 10);
 drawCircleMidPoint(50, 10, 100);
